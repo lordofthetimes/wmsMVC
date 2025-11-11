@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 04, 2025 at 03:39 AM
+-- Generation Time: Nov 11, 2025 at 08:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -130,7 +130,7 @@ INSERT INTO `item` (`itemID`, `itemName`, `itemType`, `itemDescription`) VALUES
 (1, 'Smartphone Galaxy X2', 1, 'Nowoczesny smartfon z 6,5-calowym ekranem OLED, procesorem Snapdragon 888, aparatem 64 MP oraz 128 GB pamięci.'),
 (2, 'Robot Vacuum Cleaner Pro2', 2, 'Inteligentny odkurzacz automatyczny z funkcją mapowania pomieszczeń, systemem czyszczenia 3 w 1 i wydajną baterią do 120 minut pracy.'),
 (3, 'Kuchnia Indukcyjna XL', 3, 'Nowoczesna kuchenka indukcyjna z 4 polami grzewczymi, systemem zarządzania energią i dotykowym panelem sterującym.'),
-(4, 'Kolarz MTB 5000', 4, 'Wysokiej jakości rower górski z 21 biegami, amortyzowanymi kołami i lekką ramą aluminiową.'),
+(4, 'Kolarz MTB 5000X', 4, 'Wysokiej jakości rower górski z 21 biegami, amortyzowanymi kołami i lekką ramą aluminiową.'),
 (5, 'Wózek Spacerowy City Move', 5, 'Lekki wózek spacerowy z regulowaną rączką, wieloma kieszeniami na akcesoria oraz zdejmowaną budką ochronną.'),
 (6, 'Stół Jadalny Granitowy', 6, 'Elegancki stół do jadalni z blatem granitowym i solidnymi drewnianymi nogami, pasujący do nowoczesnych wnętrz.'),
 (7, 'Skrzynka Narzędziowa Deluxe', 7, 'Przestronna skrzynka narzędziowa z wieloma przegródkami, idealna do przechowywania narzędzi ręcznych i akcesoriów.'),
@@ -456,7 +456,7 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `itemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `itemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `itemtypes`
