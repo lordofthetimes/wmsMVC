@@ -47,7 +47,7 @@ class Items extends BaseController{
 			header("Location: ".BASE_URL."items");
 		}
 		else{
-			$this->view->item = $this->model->getItems($_GET['id']);
+			$this->view->item = $this->model->getItem($_GET['id']);
 			$this->view->types = $this->model->getTypes();
 			$this->view->render('items/change');
 		}
