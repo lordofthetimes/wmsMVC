@@ -64,8 +64,13 @@ class Items extends BaseController{
 
 	public function get(){
 		$this->view->user = $this->checkSession();
-		$this->view->items = $this->model->getItems();
 		$this->view->render('items/get');
+	}
+
+	public function getItemsData(){
+		$this->checkSession();
+		header('Content-Type: application/json');
+		echo json_encode($this->model->getItems());
 	}
 
 }

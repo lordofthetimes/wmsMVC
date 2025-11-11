@@ -58,8 +58,13 @@ class Stock extends BaseController{
 
 	public function get(){
 		$this->view->user = $this->checkSession();
-		$this->view->stock = $this->model->getStock();
 		$this->view->render('stock/get');
+	}
+
+	public function getStockData(){
+		$this->checkSession();
+		header('Content-Type: application/json');
+    	echo json_encode($this->model->getStock()->fetch_all(MYSQLI_ASSOC));
 	}
 
 }

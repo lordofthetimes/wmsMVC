@@ -8,7 +8,7 @@ class BaseView{
 		require_once "views/layout/header.php";
 		require_once "views/layout/nav.php";
 		require_once "views/$name.php";
-		// require_once "views/layout/footer.php"; //add footer when implemented
+		require_once "views/layout/footer.php";
 	}
 	public function renderLogin($name){
 		require_once "views/layout/header.php";

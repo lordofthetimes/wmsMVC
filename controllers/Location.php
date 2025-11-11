@@ -63,8 +63,13 @@ class Location extends BaseController{
 		$this->view->user = $this->checkSession();
 		$this->view->buildingSelected = $this->getSelectedBuilding();
 		$this->view->buildings = $this->model->getBuildings();
-		$this->view->locations = $this->model->getLocations($this->view->buildingSelected);
 		$this->view->render('location/get');
+	}
+
+	public function getLocationsData(){
+		$this->checkSession();
+		header('Content-Type: application/json');
+    	echo json_encode($this->model->getLocations($this->getSelectedBuilding()));
 	}
 
 	private function getSelectedBuilding(){

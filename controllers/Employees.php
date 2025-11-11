@@ -7,8 +7,13 @@ class Employees extends BaseController{
 	
 	public function get(){
 		$this->view->user = $this->checkSession();
-		$this->view->employees = $this->model->getEmployees();
 		$this->view->render('employees/get');
+	}
+
+	public function getEmployeesData(){
+		$this->checkSession();
+		header('Content-Type: application/json');
+		echo json_encode($this->model->getEmployees()->fetch_all(MYSQLI_ASSOC));
 	}
 }
 ?>

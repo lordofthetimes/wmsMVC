@@ -52,12 +52,18 @@ tr{
   height: 3em;
 }
 
-tr:first-of-type td {
+tbody.header tr:first-of-type td {
   background-color: #16384e;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
+table input{
+  border: none;
+  height: 2em;
+  border-radius: 10px;
+  margin-bottom: 1.5%;
+}
 tr:nth-child(even){
   background-color: #234C6A;
 }

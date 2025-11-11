@@ -5,7 +5,7 @@
             foreach($this->buildings as $building){
                 echo "<button ";
                 if($building['buildingID'] == $this->buildingSelected){
-                    echo "class=\"selected\"";
+                    echo "class=\"selected\" value=\"".$building['buildingID']."\"";
                 }
                 echo" onclick=\"location.href='".BASE_URL."location?building=".$building['buildingID']."'\">"
                 .$building['address']."</button>";
@@ -13,25 +13,24 @@
             ?>
         </aside>
         <div>
-            <table>
-            <tr>
-                <td>Row</td>
-                <td>Shelf</td>
-                <td>Edit</td>
-                <td>Remove</td>
-            </tr>
-                <?php
-            foreach($this->locations as $location){
-                echo "<tr>";
-                echo "<td>".$location['row']."</td>
-                      <td>".$location['shelf']."</td>";
-                echo "<td> <button onclick=\"location.href='".BASE_URL."location/change?id=".$location['locationID']."&building=".$this->buildingSelected."'\">Edit</button> </td>";
-                echo "<td> <button onclick=\"location.href='".BASE_URL."location/delete?id=".$location['locationID']."&building=".$this->buildingSelected."'\">Remove</button> </td>";
-                echo "</tr>";
-            }
-            ?>
-        </table>
+            <table id="locationTable">
+                <tbody class="header">
+                    <tr>
+                        <td>Row</td>
+                        <td>Shelf</td>
+                        <td colspan=2>Actions</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" id="filterRow" placeholder="Filter by name"></td>
+                        <td><input type="text" id="filterShelf" placeholder="Filter by name"></td>
+                        <td colspan=2><button id="clearFilters" style="width:100%">Clear</button></td>
+                    </tr>
+                </tbody>
+                <tbody class="content">
+                </tbody>
+            </table>
         </div>
         <?php
         ?>
     </main>
+<script src="<?= BASE_URL; ?>assets/js/location.js"></script>
