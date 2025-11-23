@@ -1,5 +1,5 @@
 let employeesData = [];
-
+let currentSort = { column: 'name', direction: 'ASC' };
 
 const nameFilter = document.getElementById('filterName');
 const surnameFilter = document.getElementById('filterSurname');
@@ -16,6 +16,22 @@ phoneFilter.addEventListener('input', applyFilters);
 emailFilter.addEventListener('input', applyFilters);
 birthFilter.addEventListener('input', applyFilters);
 document.getElementById('clearFilters').addEventListener('click', clearFilters);
+
+document.querySelectorAll("#employeesTable .sortable").forEach(th => {
+    th.addEventListener("click", () => {
+        const col = th.dataset.column;
+
+        if (currentSort.column === col) {
+            currentSort.direction = currentSort.direction === "ASC" ? "DESC" : "ASC";
+        } else {
+            currentSort.column = col;
+            currentSort.direction = "ASC";
+        }
+
+        applyFilters();
+    });
+});
+
 
 // Fetch stock data
 fetch(BASE_URL + 'employees/getEmployeesData')
@@ -57,7 +73,21 @@ function applyFilters() {
            employee.birthDate.includes(birthFilter.value.toLowerCase());
   });
 
-  renderEmployeesTable(filtered);
+  renderEmployeesTable(sortData(filtered));
+}
+
+function sortData(data) {
+    if (!currentSort.column) return data;
+
+    const sorted = [...data].sort((a, b) => {
+        return a[currentSort.column].toString().localeCompare(
+            b[currentSort.column].toString(),
+            undefined,
+            { numeric: true, sensitivity: "base" }
+        );
+    });
+
+    return currentSort.direction === "ASC" ? sorted : sorted.reverse();
 }
 
 function clearFilters() {
@@ -67,5 +97,6 @@ function clearFilters() {
     phoneFilter.value = '';
     emailFilter.value = '';
     birthFilter.value = '';
+    currentSort = { column: 'name', direction: 'ASC' };
     renderEmployeesTable(employeesData);
 }

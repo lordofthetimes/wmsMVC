@@ -1,5 +1,5 @@
 let itemData = [];
-
+let currentSort = { column: 'itemID', direction: 'ASC' };
 
 const nameFilter = document.getElementById('filterName');
 const typeFilter = document.getElementById('filterType');
@@ -10,6 +10,20 @@ nameFilter.addEventListener('input', applyFilters);
 typeFilter.addEventListener('input', applyFilters);
 idFilter.addEventListener('input', applyFilters);
 document.getElementById('clearFilters').addEventListener('click', clearFilters);
+
+document.querySelectorAll("#itemsTable .sortable").forEach(th => {
+    th.addEventListener("click", () => {
+        const col = th.dataset.column;
+        if (currentSort.column === col) {
+            currentSort.direction = currentSort.direction === "ASC" ? "DESC" : "ASC";
+        } else {
+            currentSort.column = col;
+            currentSort.direction = "ASC";
+        }
+        applyFilters();
+    });
+});
+
 
 // Fetch stock data
 fetch(BASE_URL + 'items/getItemsData')
@@ -23,15 +37,21 @@ fetch(BASE_URL + 'items/getItemsData')
   })
   .catch(err => console.error('Error fetching stock data:', err));
 
+
+
+
 function renderItemTable(data) {
   const tbody = document.querySelector('#itemsTable tbody.content');
-  tbody.innerHTML = ''; // clear table
+  tbody.innerHTML = '';
 
   data.forEach(item => {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${item.itemID}</td>
-      <td>${item.itemName}</td>
+      <td>${item.itemName}</td>`;
+
+    if(IS_ADMIN){
+      row.innerHTML += `
       <td>${item.itemType}</td>
       <td>
         <button onclick="location.href='${BASE_URL}items/change?id=${item.itemID}'">
@@ -44,6 +64,12 @@ function renderItemTable(data) {
         </button>
       </td>
     `;
+    
+    }
+    else{
+      row.innerHTML+= `<td colspan=2>${item.itemType}</td>`;
+    }
+
     tbody.appendChild(row);
   });
 }
@@ -55,12 +81,27 @@ function applyFilters() {
            item.itemID.toLowerCase().includes(idFilter.value.toLowerCase());
   });
 
-  renderItemTable(filtered);
+  renderItemTable(sortData(filtered));
+}
+
+function sortData(data) {
+    if (!currentSort.column) return data;
+
+    const sorted = [...data].sort((a, b) => {
+        return a[currentSort.column].toString().localeCompare(
+            b[currentSort.column].toString(),
+            undefined,
+            { numeric: true, sensitivity: "base" }
+        );
+    });
+
+    return currentSort.direction === "ASC" ? sorted : sorted.reverse();
 }
 
 function clearFilters() {
     idFilter.value = '';
     nameFilter.value = '';
     typeFilter.value = '';
+    currentSort = { column: 'itemID', direction: 'ASC' };
     renderItemTable(itemData);
 }

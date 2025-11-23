@@ -1,15 +1,13 @@
 <button id="add" onClick="location.href = '<?php echo BASE_URL; ?>stock/add'">Add new entry</button>
 <table id="stockTable">
-
-    
     <tbody class="header">
         <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Address</td>
-            <td>Row</td>
-            <td>Shelf</td>
-            <td>Quantity</td>
+            <td class="sortable" data-column="itemName">Name</td>
+            <td class="sortable" data-column="itemType">Type</td>
+            <td class="sortable" data-column="address">Address</td>
+            <td class="sortable" data-column="row">Row</td>
+            <td class="sortable" data-column="shelf">Shelf</td>
+            <td class="sortable" data-column="quantity">Quantity</td>
             <td>Actions</td>
         </tr>
         <tr>

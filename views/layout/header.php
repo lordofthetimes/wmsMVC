@@ -7,6 +7,7 @@
 
         <script>
                 const BASE_URL = <?php echo json_encode(BASE_URL); ?>;
+                const IS_ADMIN = <?php echo json_encode($this->isAdmin($this->user)); ?>;
         </script>
 </head>
 <body>

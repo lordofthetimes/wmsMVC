@@ -7,7 +7,12 @@ class Employees extends BaseController{
 	
 	public function get(){
 		$this->view->user = $this->checkSession();
-		$this->view->render('employees/get');
+		if($this->view->isAdmin($this->view->user)){
+			$this->view->render('employees/get');
+		}
+		else{
+			header("location: ".BASE_URL."");
+		}
 	}
 
 	public function getEmployeesData(){

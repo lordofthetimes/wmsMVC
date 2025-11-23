@@ -45,6 +45,7 @@ table{
   overflow: hidden;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   margin-bottom: 4vh;
+  max-width: 90vw;
 }
 
 tr{
@@ -52,7 +53,7 @@ tr{
   height: 3em;
 }
 
-tbody.header tr:first-of-type td {
+tbody.header > tr:first-of-type td {
   background-color: #16384e;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -81,10 +82,11 @@ td {
 }
 
 td button {
-  height: 100%;
+  height: 3em;
   width: 10vh;
   margin-right: 1%;
 }
+
 tr:nth-child(even) button{
   background-color: #234C6A;
 }
@@ -213,4 +215,13 @@ button:hover, tr button:hover{
   height: 5vh;
   margin: 1vh auto 0 42vw;
   border-radius: 8px;
+}
+
+.main{
+  margin: auto;
+  width: 70%;
+}
+
+.noAction :last-child{
+
 }

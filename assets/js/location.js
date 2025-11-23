@@ -1,5 +1,5 @@
 let locationsData = [];
-
+let currentSort = { column: 'row', direction: 'ASC' };
 
 const rowFilter = document.getElementById('filterRow');
 const shelfFilter = document.getElementById('filterShelf');
@@ -8,6 +8,22 @@ const shelfFilter = document.getElementById('filterShelf');
 rowFilter.addEventListener('input', applyFilters);
 shelfFilter.addEventListener('input', applyFilters);
 document.getElementById('clearFilters').addEventListener('click', clearFilters);
+
+document.querySelectorAll("#locationTable .sortable").forEach(th => {
+    th.addEventListener("click", () => {
+        const col = th.dataset.column;
+
+        if (currentSort.column === col) {
+            currentSort.direction = currentSort.direction === "ASC" ? "DESC" : "ASC";
+        } else {
+            currentSort.column = col;
+            currentSort.direction = "ASC";
+        }
+
+        applyFilters();
+    });
+});
+
 
 // Fetch location data
 fetch(BASE_URL + 'location/getLocationsData?building=' + document.querySelector('.selected').value)
@@ -22,13 +38,16 @@ fetch(BASE_URL + 'location/getLocationsData?building=' + document.querySelector(
   .catch(err => console.error('Error fetching location data:', err));
 
 function renderLocationTable(data) {
-  const tbody = document.querySelector('#locationTable tbody.content');
+  const tbody = document.querySelector('#locationTable tbody.content')
   tbody.innerHTML = '';
 
   data.forEach(location => {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${location.row}</td>
+    `;
+    if(IS_ADMIN){
+      row.innerHTML += `
       <td>${location.shelf}</td>
       <td>
         <button onclick="location.href='${BASE_URL}location/change?id=${location.locationID}&building=${location.buildingID}'">
@@ -40,7 +59,12 @@ function renderLocationTable(data) {
           Remove
         </button>
       </td>
-    `;
+      `;
+    
+    }
+    else{
+      row.innerHTML+= `<td colspan=2>${location.shelf}</td>`;
+    }
     tbody.appendChild(row);
   });
 }
@@ -52,11 +76,24 @@ function applyFilters() {
            location.shelf.toLowerCase().includes(shelfFilter.value.toLowerCase())
   });
 
-  renderLocationTable(filtered);
+  renderLocationTable(sortData(filtered));
 }
+
+function sortData(data) {
+    if (!currentSort.column) return data;
+    const sorted = [...data].sort((a, b) => {
+        return a[currentSort.column].toString().localeCompare(
+            b[currentSort.column].toString(),
+            undefined,
+            { numeric: true, sensitivity: "base" }
+        );
+    });
+    return currentSort.direction === "ASC" ? sorted : sorted.reverse();
+  }
 
 function clearFilters() {
     rowFilter.value = '';
     shelfFilter.value = '';
+    currentSort = { column: 'row', direction: 'ASC' };
     renderLocationTable(locationsData);
 }

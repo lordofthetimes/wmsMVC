@@ -24,8 +24,8 @@ public function __construct() {
 
     // If no controller is mentioned, load the default controller/view
     if (empty($url[0])) {
-        require_once("controllers/Stock.php");
-        $controller = new Stock();
+        require_once("controllers/Main.php");
+        $controller = new Main();
         $controller->get(); // default method
         return;
     }

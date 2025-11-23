@@ -2,12 +2,12 @@
 
                 <tbody class="header">
                     <tr>
-                        <td>Name</td>
-                        <td>Surname</td>
-                        <td>Position</td>
-                        <td>Phone</td>
-                        <td>E-Mail</td>
-                        <td>Birth Date</td>
+                        <td class="sortable" data-column="name">Name</td>
+                        <td class="sortable" data-column="surname">Surname</td>
+                        <td class="sortable" data-column="position">Position</td>
+                        <td class="sortable" data-column="phoneNumber">Phone</td>
+                        <td class="sortable" data-column="email">E-Mail</td>
+                        <td class="sortable" data-column="birthDate">Birth Date</td>
                         <td>Actions</td>
                     </tr>
                     <tr>

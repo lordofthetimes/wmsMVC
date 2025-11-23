@@ -8,7 +8,6 @@ abstract class BaseController{
 	public function loadModel($name) {
 
                 $path = 'models/'.$name.'Model.php';
-
                 if (file_exists($path)) {
                         require_once("models/".$name."Model.php");
 

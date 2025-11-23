@@ -1,11 +1,17 @@
-<button id="add" onClick="location.href = '<?php echo BASE_URL; ?>items/add'">Add new location</button>
+<?php
+    if($this->isAdmin($this->user)){
+        ?>
+        <button id="add" onClick="location.href = '<?php echo BASE_URL; ?>items/add'">Add new item</button>
+        <?php
+    }
+?>
     <table id="itemsTable">
 
                 <tbody class="header">
                     <tr>
-                        <td>ID</td>
-                        <td>Name</td>
-                        <td>Type</td>
+                        <td class="sortable" data-column="itemID">ID</td>
+                        <td class="sortable" data-column="itemName">Name</td>
+                        <td class="sortable" data-column="itemType">Type</td>
                         <td colspan=2>Actions</td>
                     </tr>
                     <tr>

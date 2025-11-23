@@ -16,7 +16,7 @@ class Location extends BaseController{
 	// }
 	public function add(){
 		$this->view->user = $this->checkSession();
-		if(isset($_POST['submit'])){
+		if(isset($_POST['submit'])&& $this->view->isAdmin($this->view->user)){
 			unset($_POST['submit']);
 
 			$buildingID = $_POST['buildingID'];
@@ -34,7 +34,7 @@ class Location extends BaseController{
 
 	public function change(){
 		$this->view->user = $this->checkSession();
-		if(isset($_POST['submit'])){
+		if(isset($_POST['submit']) && $this->view->isAdmin($this->view->user)){
 			unset($_POST['submit']);
 
    			$row = $_POST['row'];   
@@ -53,7 +53,7 @@ class Location extends BaseController{
 
 	public function delete(){
 		$this->view->user = $this->checkSession();
-		if(isset($_GET['id'])){
+		if(isset($_GET['id']) && $this->view->isAdmin($this->view->user)){
 			$this->model->deleteLocation($_GET['id']);
 		}
 		header("Location: ".BASE_URL."location?building=".$this->getSelectedBuilding());

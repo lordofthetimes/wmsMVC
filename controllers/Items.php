@@ -18,6 +18,7 @@ class Items extends BaseController{
 	
 	public function add(){
 		$this->view->user = $this->checkSession();
+		
 		if(isset($_POST['submit'])){
 			unset($_POST['submit']);
 			
@@ -36,7 +37,7 @@ class Items extends BaseController{
 
 	public function change(){
 		$this->view->user = $this->checkSession();
-		if(isset($_POST['submit'])){
+		if(isset($_POST['submit']) && $this->view->isAdmin($this->view->user)){
 			unset($_POST['submit']);
 
 			$name = $_POST['name'];
@@ -55,7 +56,7 @@ class Items extends BaseController{
 
 	public function delete(){
 		$this->view->user = $this->checkSession();
-		if(isset($_GET['id'])){
+		if(isset($_GET['id']) && $this->view->isAdmin($this->view->user)){
 			$this->model->deleteItem($_GET['id']);
 		}
 		header("Location: ".BASE_URL."items");

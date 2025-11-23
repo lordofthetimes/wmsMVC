@@ -1,4 +1,12 @@
-<button id="add" onClick="location.href = '<?php echo BASE_URL; ?>location/add?building=<?php echo $this->buildingSelected?>'">Add new location</button>
+<?php
+    if($this->isAdmin($this->user)){
+        ?>
+        <button id="add" onClick="location.href = '<?php echo BASE_URL; ?>location/add?building=<?php echo $this->buildingSelected?>'">Add new location</button>
+        <?php
+    }
+?>
+
+
     <main id="locations">
         <aside>
             <?php
@@ -16,8 +24,8 @@
             <table id="locationTable">
                 <tbody class="header">
                     <tr>
-                        <td>Row</td>
-                        <td>Shelf</td>
+                        <td class="sortable" data-column="row">Row</td>
+                        <td class="sortable" data-column="shelf">Shelf</td>
                         <td colspan=2>Actions</td>
                     </tr>
                     <tr>
