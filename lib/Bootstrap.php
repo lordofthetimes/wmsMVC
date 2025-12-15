@@ -1,4 +1,5 @@
 <?php
+#[\AllowDynamicProperties]
 class Bootstrap{
 
 /*	public function __construct(){
