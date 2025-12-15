@@ -1,7 +1,10 @@
 <?php
     if($this->isAdmin($this->user)){
         ?>
-        <button id="add" onClick="location.href = '<?php echo BASE_URL; ?>items/add'">Add new item</button>
+        <div class="mainButtons">
+            <button id="add" onClick="location.href = '<?php echo BASE_URL; ?>items/add'">Add new item</button>
+            <button id="multidelete">Delete selected entries</button> 
+        </div>
         <?php
     }
 ?>
@@ -9,9 +12,9 @@
 
                 <tbody class="header">
                     <tr>
-                        <td class="sortable" data-column="itemID">ID</td>
-                        <td class="sortable" data-column="itemName">Name</td>
-                        <td class="sortable" data-column="itemType">Type</td>
+                        <td class="sortable" data-column="itemID">ID <span class="sort-arrow"></td>
+                        <td class="sortable" data-column="itemName">Name <span class="sort-arrow"></td>
+                        <td class="sortable" data-column="itemType">Type <span class="sort-arrow"></td>
                         <td colspan=2>Actions</td>
                     </tr>
                     <tr>

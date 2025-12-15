@@ -54,11 +54,7 @@ function renderLocationTable(data) {
           Edit
         </button>
       </td>
-      <td>
-        <button onclick="location.href='${BASE_URL}location/delete?id=${location.locationID}&building=${location.buildingID}'">
-          Remove
-        </button>
-      </td>
+      <td><input type="checkbox" class="selectLocation" data-id="${location.locationID}"></td>
       `;
     
     }
@@ -67,6 +63,7 @@ function renderLocationTable(data) {
     }
     tbody.appendChild(row);
   });
+  updateSortArrows()
 }
 
 
@@ -91,9 +88,52 @@ function sortData(data) {
     return currentSort.direction === "ASC" ? sorted : sorted.reverse();
   }
 
+function updateSortArrows() {
+  document.querySelectorAll('.sortable').forEach(th => {
+    const arrow = th.querySelector('.sort-arrow');
+    arrow.textContent = '';
+
+    if (th.dataset.column === currentSort.column) {
+        arrow.textContent = currentSort.direction === 'ASC' ? '▲' : '▼';
+    }
+  });
+}
+
+
 function clearFilters() {
     rowFilter.value = '';
     shelfFilter.value = '';
     currentSort = { column: 'row', direction: 'ASC' };
     renderLocationTable(locationsData);
 }
+
+document.getElementById('multidelete').addEventListener('click', () => {
+  const selectedIds = Array.from(document.querySelectorAll('.selectLocation:checked'))
+      .map(checkbox => checkbox.dataset.id);
+
+  if (selectedIds.length === 0) {
+       alert('No items selected');
+      return;
+  }
+
+  const confirmed = confirm('Are you sure you want to delete ' + selectedIds.length + ' selected locations?');
+
+  if (!confirmed) return;
+
+
+  fetch(BASE_URL + 'location/delete', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+          ids: JSON.stringify(selectedIds)
+      })
+  })
+
+  alert(`Deleted selected locations successfully`);
+  locationsData = locationsData.filter(
+      location => !selectedIds.includes(location.locationID.toString())
+  );
+  applyFilters();
+});

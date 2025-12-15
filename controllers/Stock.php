@@ -67,5 +67,16 @@ class Stock extends BaseController{
     	echo json_encode($this->model->getStock()->fetch_all(MYSQLI_ASSOC));
 	}
 
+	public function delete(){
+		$this->view->user = $this->checkSession();
+		if(isset($_POST['ids'])){
+			$ids = json_decode($_POST['ids']);
+			foreach($ids as $id){
+				$this->model->deleteLocation($id);
+			}
+		}
+		header("Location: ".BASE_URL."stock");
+	}
+
 }
 ?>

@@ -56,10 +56,13 @@ class Items extends BaseController{
 
 	public function delete(){
 		$this->view->user = $this->checkSession();
-		if(isset($_GET['id']) && $this->view->isAdmin($this->view->user)){
-			$this->model->deleteItem($_GET['id']);
+		if(!$this->view->isAdmin($this->view->user)) header("Location: ".BASE_URL."location?building=".$this->getSelectedBuilding());
+		if(isset($_POST['ids'])){
+			$ids = json_decode($_POST['ids']);
+			foreach($ids as $id){
+				$this->model->deleteItem($id);
+			}
 		}
-		header("Location: ".BASE_URL."items");
 	}
 
 

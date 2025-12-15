@@ -210,10 +210,9 @@ button:hover, tr button:hover{
 
 
 
-#add{
+#add,#multidelete{
   width: 10vw;
   height: 5vh;
-  margin: 1vh auto 0 42vw;
   border-radius: 8px;
 }
 
@@ -222,6 +221,12 @@ button:hover, tr button:hover{
   width: 70%;
 }
 
-.noAction :last-child{
-
+.mainButtons{
+  display: flex;
+  width: 100vw;
+  height: 11vh;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2vw;
+  align-items: center;
 }

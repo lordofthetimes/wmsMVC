@@ -1,7 +1,10 @@
 <?php
     if($this->isAdmin($this->user)){
         ?>
-        <button id="add" onClick="location.href = '<?php echo BASE_URL; ?>location/add?building=<?php echo $this->buildingSelected?>'">Add new location</button>
+        <div class="mainButtons">
+            <button id="add" onClick="location.href = '<?php echo BASE_URL; ?>location/add?building=<?php echo $this->buildingSelected?>'">Add new location</button>
+            <button id="multidelete">Delete selected entries</button> 
+        </div>
         <?php
     }
 ?>
@@ -24,8 +27,8 @@
             <table id="locationTable">
                 <tbody class="header">
                     <tr>
-                        <td class="sortable" data-column="row">Row</td>
-                        <td class="sortable" data-column="shelf">Shelf</td>
+                        <td class="sortable" data-column="row">Row <span class="sort-arrow"></td>
+                        <td class="sortable" data-column="shelf">Shelf <span class="sort-arrow"></td>
                         <td colspan=2>Actions</td>
                     </tr>
                     <tr>

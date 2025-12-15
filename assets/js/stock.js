@@ -58,9 +58,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${stock.shelf}</td>
                 <td>${stock.quantity}</td>
                 <td><button onclick="location.href='${BASE_URL}stock/change?id=${stock.storedID}'">Change</button></td>
+                <td><input type="checkbox" class="selectStock" data-id="${stock.storedID}"></td>
             </tr>
             `;
         });
+        updateSortArrows();
     }
 
     function applyFilters() {
@@ -87,6 +89,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return currentSort.direction === "ASC" ? sorted : sorted.reverse();
     }
 
+    function updateSortArrows() {
+        document.querySelectorAll('.sortable').forEach(th => {
+            const arrow = th.querySelector('.sort-arrow');
+            arrow.textContent = '';
+
+            if (th.dataset.column === currentSort.column) {
+                arrow.textContent = currentSort.direction === 'ASC' ? '▲' : '▼';
+            }
+        });
+    }
+
+
     function clearFilters() {
         nameFilter.value = '';
         typeFilter.value = '';
@@ -97,4 +111,37 @@ document.addEventListener("DOMContentLoaded", () => {
         currentSort = { column: 'itemName', direction: "ASC" };
         applyFilters();
     }
+
+    document.getElementById('multidelete').addEventListener('click', () => {
+        const selectedIds = Array.from(document.querySelectorAll('.selectStock:checked'))
+            .map(checkbox => checkbox.dataset.id);
+
+        if (selectedIds.length === 0) {
+            alert('No items selected');
+            return;
+        }
+
+        const confirmed = confirm('Are you sure you want to delete ' + selectedIds.length + ' selected items?');
+
+        if (!confirmed) return;
+
+
+        fetch(BASE_URL + 'stock/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                ids: JSON.stringify(selectedIds)
+            })
+        })
+
+        alert(`Deleted selected items successfully`);
+        stockData = stockData.filter(
+            stock => !selectedIds.includes(stock.storedID.toString())
+        );
+        applyFilters(stockData);
+        
+    });
+
 });

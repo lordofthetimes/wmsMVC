@@ -57,9 +57,22 @@ function renderEmployeesTable(data) {
       <td>${employee.position}</td>
       <td>${employee.phoneNumber}</td>
       <td>${employee.email}</td>
-      <td colspan=2>${employee.birthDate}</td>
+      <td>${employee.birthDate}</td>
+      <td><input type="checkbox" class="selectEmployee" data-id="${employee.employeeID}"></td>
     `;
     tbody.appendChild(row);
+  });
+  updateSortArrows();
+}
+
+function updateSortArrows() {
+  document.querySelectorAll('.sortable').forEach(th => {
+    const arrow = th.querySelector('.sort-arrow');
+    arrow.textContent = '';
+
+    if (th.dataset.column === currentSort.column) {
+        arrow.textContent = currentSort.direction === 'ASC' ? '▲' : '▼';
+    }
   });
 }
 
@@ -100,3 +113,34 @@ function clearFilters() {
     currentSort = { column: 'name', direction: 'ASC' };
     renderEmployeesTable(employeesData);
 }
+
+document.getElementById('multidelete').addEventListener('click', () => {
+  const selectedIds = Array.from(document.querySelectorAll('.selectEmployee:checked'))
+      .map(checkbox => checkbox.dataset.id);
+
+  if (selectedIds.length === 0) {
+       alert('No items selected');
+      return;
+  }
+
+  const confirmed = confirm('Are you sure you want to delete ' + selectedIds.length + ' selected emplooyes?');
+
+  if (!confirmed) return;
+
+
+  fetch(BASE_URL + 'location/delete', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+          ids: JSON.stringify(selectedIds)
+      })
+  })
+
+  alert(`Deleted selected employees successfully`);
+  employeesData = employeesData.filter(
+      employee => !selectedIds.includes(employee.employeeID.toString())
+  );
+  applyFilters();
+});
