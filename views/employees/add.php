@@ -1,5 +1,5 @@
 <div id="update">
-    <form action="<?php echo BASE_URL; ?>employees/add" method="post" style="height: 65vh;">
+    <form action="<?php echo BASE_URL; ?>employees/add" method="post" style="height: 72vh;">
         <h1>Add Employee</h1>
         <input type="hidden" id="submit" name="submit" value="t" required>
         

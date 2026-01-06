@@ -72,7 +72,7 @@ class Stock extends BaseController{
 		if(isset($_POST['ids'])){
 			$ids = json_decode($_POST['ids']);
 			foreach($ids as $id){
-				$this->model->deleteLocation($id);
+				$this->model->removeStock($id);
 			}
 		}
 		header("Location: ".BASE_URL."stock");
